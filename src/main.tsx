@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css';
 
 import App from './App.tsx';
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <CandidateSearch />,
+      },
+      {
+        path: '/CandidateSearch',
+        element: <SavedCandidates />,
       },
       {
         path: '/SavedCandidates',
