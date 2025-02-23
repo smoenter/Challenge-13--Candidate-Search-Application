@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { searchGithub, searchGithubUser } from '../api/API';
 import { Candidate } from '../interfaces/Candidate.interface';
+ 
 
 const CandidateSearch = () => {
   const [candidates, setCandidates] = useState<Candidate[]>([]);
@@ -43,12 +44,12 @@ const CandidateSearch = () => {
         <p>{currentCandidate.location}</p>
         <img src={currentCandidate.avatar_url} alt={currentCandidate.login} />
         <p>{currentCandidate.email}</p>
-        <a href={currentCandidate.html_url} target="_blank" rel="noopener noreferrer">
+        <a className="viewProfile" href={currentCandidate.html_url} target="_blank" rel="noopener noreferrer">
           View Profile
         </a>
         <p>{currentCandidate.company}</p>
-        <button onClick={handleSaveCandidate}>+</button>
-        <button onClick={handleNextCandidate}>-</button>
+        <button className="saveCandidate" onClick={handleSaveCandidate}>+</button>
+        <button className="nextCandidate" onClick={handleNextCandidate}>-</button>
       </div>
     ) : (
       <p>No more candidates to review.</p>

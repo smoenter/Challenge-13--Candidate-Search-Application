@@ -1,6 +1,7 @@
 // import Links
 import { useState, useEffect } from 'react';
 import { Candidate } from '../interfaces/Candidate.interface';
+ 
 
 const SavedCandidates = () => {
   const [savedCandidates, setSavedCandidates] = useState<Candidate[]>([]);
@@ -26,8 +27,8 @@ const SavedCandidates = () => {
       <h1>Saved Candidates</h1>
       <ul>
         {savedCandidates.map((candidate) => (
-          <li key={candidate.username}> {/* Use username as a unique key */}
-            <h3>{candidate.username}</h3>
+          <li key={candidate.login}> {/* Use username as a unique key */}
+            <h3>{candidate.login}</h3>
             <p>{candidate.location}</p>
             <p>{candidate.company}</p>
             <a href={candidate.html_url} target="_blank" rel="noopener noreferrer">
