@@ -39,8 +39,8 @@ const CandidateSearch = () => {
   return (
     <div>
     {currentCandidate ? (
-      <div>
-        <h2>{currentCandidate.login}</h2>
+      <div className="style.candidateContainer">
+              <h2>{currentCandidate.login}</h2>
         <p>{currentCandidate.location}</p>
         <img src={currentCandidate.avatar_url} alt={currentCandidate.login} />
         <p>{currentCandidate.email}</p>
