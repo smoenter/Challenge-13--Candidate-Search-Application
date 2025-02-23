@@ -1,4 +1,7 @@
-const searchGithub = async () => {
+import { Candidate } from '../interfaces/Candidate.interface';
+
+
+const searchGithub = async (): Promise<Candidate[]> => {
   try {
     const start = Math.floor(Math.random() * 100000000) + 1;
     // console.log(import.meta.env);
@@ -23,9 +26,9 @@ const searchGithub = async () => {
   }
 };
 
-const searchGithubUser = async (username: string) => {
+const searchGithubUser = async (login: string) => {
   try {
-    const response = await fetch(`https://api.github.com/users/${username}`, {
+    const response = await fetch(`https://api.github.com/users/${login}`, {
       headers: {
         Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
       },

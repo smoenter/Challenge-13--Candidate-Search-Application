@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 const Nav = () => {
   return (
-    <div> 
-      <nav className="nav">
+
+    <nav className="nav">
       <ul className="nav-list">
         <li className="nav-item">
           <Link className="nav-link" to="/">Home</Link>
@@ -14,8 +14,7 @@ const Nav = () => {
         </li>
       </ul>
     </nav>
-    <h1>Candidate Search</h1>
-    </div>
+
   );
 };
 
