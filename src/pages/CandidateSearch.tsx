@@ -49,6 +49,7 @@ const CandidateSearch = () => {
           <h1>Candidate Search</h1>
           <div>
             <img src={currentCandidate.avatar_url} alt={currentCandidate.login} width="50%" />
+            <h2>{currentCandidate.name}</h2>
             <p>{currentCandidate.login} <em>({currentCandidate.login})</em></p>
             <p>Location: {currentCandidate.location || "Not available"}</p>
             <p>Email: {currentCandidate.email || "Not available"}</p>

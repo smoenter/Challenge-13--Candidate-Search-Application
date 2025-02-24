@@ -54,7 +54,7 @@ const handleReject = (login: string) => {
       <table>
         <thead>
           <tr>
-            <th>Avatar</th>
+            <th>Image</th>
             <th>Name</th>
             <th>Location</th>
             <th>Email</th>
