@@ -11,7 +11,7 @@ const SavedCandidates = () => {
     // Function to fetch the full user data (email, company, bio, location)
     const fetchUserDetails = async (login: string) => {
       try {
-        const response = await searchGithubUser(login); // Make the API call to get detailed user data
+        const response = await searchGithubUser(login); 
         return response;
       } catch (error) {
         console.error(`Error fetching details for ${login}:`, error);

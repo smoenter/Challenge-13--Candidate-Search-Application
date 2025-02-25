@@ -4,17 +4,26 @@ import { Candidate } from '../interfaces/Candidate.interface';
 
 
 const CandidateSearch = () => {
-  const [candidates, setCandidates] = useState<Candidate[]>([]);
+  const [candidates, setCandidates] = useState([]);
   const [currentCandidateIndex, setCurrentCandidateIndex] = useState(0);
+  const [currentCandidate, setCurrentCandidate] = useState<Candidate | null>(null);
+  const [savedCandidates, setSavedCandidates] = useState<Candidate[]>(() => {
 
+   const storedCandidates = localStorage.getItem("savedCandidates");
+   return storedCandidates ? JSON.parse(storedCandidates) : []; 
+  });
 
+ 
   // Fetch candidate data when the component loads
   useEffect(() => {
     const fetchCandidates = async () => {
       try {
         const data = await searchGithub();
-        console.log('Fetched candidates:', data); // Log the fetched candidates
         setCandidates(data);
+        if (data.length > 0) {
+        const user = await searchGithubUser(data[0].login);
+        setCurrentCandidate(user);
+        }
       } catch (error) {
         console.error('Error fetching candidates:', error);
       }
@@ -23,22 +32,38 @@ const CandidateSearch = () => {
     fetchCandidates();
   }, []);
 
+  useEffect(() => {
+   localStorage.setItem("savedCandidates", JSON.stringify(savedCandidates));
+  }, [savedCandidates]);
+
+  useEffect(()=> {
+    const fetchNewCandidate = async () => {
+      if (candidates [currentCandidateIndex]) {
+        const user = await searchGithubUser(candidates[currentCandidateIndex].login);
+        setCurrentCandidate(user);
+      } else {
+        setCurrentCandidate(null);
+      }
+    };
+    fetchNewCandidate();
+  }, [currentCandidateIndex, candidates]);
+
   // Handle saving the candidate to localstorage 
   const handleSaveCandidate = () => {
-    const candidate = candidates[currentCandidateIndex];
-    console.log('Saved candidate:', candidate);
-    setCurrentCandidateIndex((prevIndex) => prevIndex + 1);
+    if (currentCandidate) {
+      setSavedCandidates((prev) => [...prev, currentCandidate]);
+      setCurrentCandidateIndex((prevIndex) => prevIndex + 1); 
+    }
   };
 
   const handleNextCandidate = () => {
-    setCurrentCandidateIndex((prevIndex) => prevIndex + 1);
+   setCurrentCandidateIndex((prevIndex) => prevIndex + 1);
   };
 
   if (!candidates.length) {
     return <p>No candidates available to review.</p>;
   }
 
-  const currentCandidate = candidates[currentCandidateIndex];
   console.log('Current candidate:', currentCandidate);
 
 
@@ -56,7 +81,6 @@ const CandidateSearch = () => {
             <p>Company: {currentCandidate.company || "Not available"}</p>
             <p>Bio: {currentCandidate.bio || "Not available"}</p>
             <a className="viewProfile" href={currentCandidate.html_url} target="_blank" rel="noopener noreferrer">
-              View Profile
             </a>
           </div>
           <button className="saveCandidate" onClick={handleSaveCandidate}>+</button>
