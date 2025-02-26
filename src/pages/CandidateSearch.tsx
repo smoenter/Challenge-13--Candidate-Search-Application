@@ -4,13 +4,21 @@ import { Candidate } from '../interfaces/Candidate.interface';
 
 
 const CandidateSearch = () => {
+  // State to store the list of candidates fetched from GitHub
   const [candidates, setCandidates] = useState([]);
+  // State to store the current index of the candidate being viewed
   const [currentCandidateIndex, setCurrentCandidateIndex] = useState(0);
+  // State to store the details of the current candidate
   const [currentCandidate, setCurrentCandidate] = useState<Candidate | null>(null);
+  // State to store saved candidates in localStorage,
   const [savedCandidates, setSavedCandidates] = useState<Candidate[]>(() => {
-
+    try{
    const storedCandidates = localStorage.getItem("savedCandidates");
    return storedCandidates ? JSON.parse(storedCandidates) : []; 
+  } catch (error) {
+    console.error("Error parsing saved candidates:", error);
+    return [];
+  }
   });
 
  
@@ -18,24 +26,29 @@ const CandidateSearch = () => {
   useEffect(() => {
     const fetchCandidates = async () => {
       try {
+        // Fetching the list of candidates from GitHub
         const data = await searchGithub();
+        // Updates the state with the fetch candidates
         setCandidates(data);
         if (data.length > 0) {
         const user = await searchGithubUser(data[0].login);
+        // Set the first candidate as the current one 
         setCurrentCandidate(user);
         }
       } catch (error) {
         console.error('Error fetching candidates:', error);
       }
     };
-
+// Excutes the fetch on component load 
     fetchCandidates();
   }, []);
 
+  // update localStorage whenever the savedCandidates state changes
   useEffect(() => {
    localStorage.setItem("savedCandidates", JSON.stringify(savedCandidates));
   }, [savedCandidates]);
 
+  // Fetch the details of a new candidate when the index changes 
   useEffect(()=> {
     const fetchNewCandidate = async () => {
       if (candidates [currentCandidateIndex]) {
@@ -45,10 +58,11 @@ const CandidateSearch = () => {
         setCurrentCandidate(null);
       }
     };
+    // Calls the function to update the current candidate
     fetchNewCandidate();
   }, [currentCandidateIndex, candidates]);
 
-  // Handle saving the candidate to localstorage 
+  // Handle saving the candidate  
   const handleSaveCandidate = () => {
     if (currentCandidate) {
       setSavedCandidates((prev) => [...prev, currentCandidate]);
@@ -56,10 +70,11 @@ const CandidateSearch = () => {
     }
   };
 
+  // Handle moving to the next candidate
   const handleNextCandidate = () => {
    setCurrentCandidateIndex((prevIndex) => prevIndex + 1);
   };
-
+// In no candidate are available, show a message indicating so
   if (!candidates.length) {
     return <p>No candidates available to review.</p>;
   }
