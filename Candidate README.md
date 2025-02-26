@@ -38,8 +38,8 @@ npm run start
 Open your browser and navigate to `http://localhost:3000`.
 
 ## Screenshots
-![Screenshot 1](src/assets/Images/ADD LINK)
-![Screenshot 2](src/assets/Images/ADD LINK)
+![Screenshot 1](src/assets/Screenshot%202025-02-25%20184023.png)
+![Screenshot 2](src/assets/Screenshot%202025-02-25%20184044.png)
 
 ## Technologies Used
 - React

@@ -5,7 +5,7 @@ import { Candidate } from '../interfaces/Candidate.interface';
 
 const CandidateSearch = () => {
   // State to store the list of candidates fetched from GitHub
-  const [candidates, setCandidates] = useState([]);
+  const [candidates, setCandidates] = useState<Candidate[]>([]);
   // State to store the current index of the candidate being viewed
   const [currentCandidateIndex, setCurrentCandidateIndex] = useState(0);
   // State to store the details of the current candidate
