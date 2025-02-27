@@ -59,5 +59,6 @@ This project was done with the help of the following:
 - Instructor Aaron Brown
 - TA Diem Ly
 - Tutor Justin
+- Classmate Alyssa 
 - ChatGPT 
 - GitHub copilot 
